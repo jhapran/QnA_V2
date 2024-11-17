@@ -252,7 +252,7 @@ export function Landing() {
                   <Button
                     size="lg"
                     onClick={handleGetStarted}
-                    className="w-full sm:w-auto bg-white hover:bg-blue-50 text-blue-600 border-transparent font-semibold"
+                    className="w-full sm:w-auto bg-grey hover:bg-blue-50 text-blue-600 border-transparent font-semibold"
                   >
                     Get Started Now
                     <ArrowRight className="ml-2 h-4 w-4" />
