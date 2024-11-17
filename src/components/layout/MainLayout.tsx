@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Header } from './header';
+import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 
