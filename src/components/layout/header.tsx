@@ -1,4 +1,4 @@
-import { Bell, LogOut, Settings, User } from 'lucide-react';
+import { Bell, LogOut, Settings, User, Home, BookOpen, Users, BarChart2 } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../ui/button';
 
@@ -6,32 +6,79 @@ interface HeaderProps {
   isAuthenticated?: boolean;
 }
 
-export function Header({ isAuthenticated }: HeaderProps) {
+export function Header({ isAuthenticated = true }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleGetStarted = () => {
-    navigate('/dashboard');
+  const navigationItems = [
+    { name: 'Dashboard', icon: Home, path: '/dashboard' },
+    { name: 'Courses', icon: BookOpen, path: '/courses' },
+    { name: 'Students', icon: Users, path: '/students' },
+    { name: 'Analytics', icon: BarChart2, path: '/analytics' },
+  ];
+
+  const handleLogout = () => {
+    navigate('/');
   };
 
-  const isOnDashboard = location.pathname === '/dashboard';
-
   return (
-    <header className="border-b border-gray-200 bg-white">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center space-x-2">
-          <div className="rounded-lg bg-blue-600 p-2">
-            <User className="h-6 w-6 text-white" />
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center space-x-8">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="rounded-lg bg-blue-600 p-2">
+                <User className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-xl font-bold text-gray-900">EduQuery</span>
+            </Link>
+
+            {isAuthenticated && (
+              <nav className="hidden md:flex space-x-4">
+                {navigationItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = location.pathname === item.path;
+
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={`flex items-center space-x-2 px-3 py-2 rounded-md transition-colors ${
+                        isActive
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      <Icon className="h-5 w-5" />
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
+            )}
           </div>
-          <span className="text-xl font-bold text-gray-900">EduQuery</span>
-        </Link>
-        
-        <div className="flex items-center space-x-4">
-          {!isOnDashboard && (
-            <Button size="sm" onClick={handleGetStarted}>
-              Get Started
-            </Button>
-          )}
+
+          <div className="flex items-center gap-4">
+            {isAuthenticated && (
+              <>
+                <button className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
+                  <Bell className="h-5 w-5" />
+                </button>
+                <button className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
+                  <Settings className="h-5 w-5" />
+                </button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="flex items-center gap-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Logout</span>
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
