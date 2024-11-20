@@ -13,6 +13,14 @@ export function Pricing() {
     navigate('/signup', { state: { plan: planId } });
   };
 
+  const calculatePrice = (monthlyPrice: number, interval: 'month' | 'year'): number => {
+    if (interval === 'year') {
+      // Apply 20% discount and ensure whole number
+      return Math.round(monthlyPrice * 12 * 0.8);
+    }
+    return monthlyPrice;
+  };
+
   return (
     <div className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,7 +85,7 @@ export function Pricing() {
                 <p className="mt-2 text-gray-500">{plan.description}</p>
                 <p className="mt-8">
                   <span className="text-4xl font-bold text-gray-900">
-                    ${billingInterval === 'year' ? plan.price * 0.8 : plan.price}
+                    ${calculatePrice(plan.price, billingInterval)}
                   </span>
                   <span className="text-gray-500">/{billingInterval}</span>
                 </p>
