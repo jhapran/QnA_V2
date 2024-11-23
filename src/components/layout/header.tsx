@@ -31,7 +31,6 @@ export function Header({ isAuthenticated = false }: HeaderProps) {
               <Link to="/" className="text-gray-700 hover:text-gray-900">Home</Link>
               <Link to="/features" className="text-gray-700 hover:text-gray-900">Features</Link>
               <Link to="/pricing" className="text-gray-700 hover:text-gray-900">Pricing</Link>
-              <Link to="/about" className="text-gray-700 hover:text-gray-900">About</Link>
             </nav>
           </div>
         </div>
